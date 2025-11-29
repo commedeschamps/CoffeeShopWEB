@@ -1,0 +1,46 @@
+package com.coffeeshop.shop.core.patterns.decorator.decorators;
+
+import com.coffeeshop.shop.core.model.beverage.Beverage;
+import com.coffeeshop.shop.core.patterns.decorator.types.MilkType;
+
+public class MilkDecorator extends BeverageDecorator {
+
+    private final MilkType milkType;
+
+    public MilkDecorator(Beverage delegate, MilkType milkType) {
+        super(delegate);
+        this.milkType = milkType;
+    }
+
+
+    @Override
+    public String getDescription() {
+        if (milkType == null) {
+            return delegate.getDescription() + ", milk";
+        }
+        return delegate.getDescription() + ", " + selectMilk(milkType) + " milk";
+    }
+    public String selectMilk(MilkType milkType) {
+        return switch (milkType) {
+            case ALMOND -> "almond";
+            case COCONUT -> "coconut";
+            case OAT -> "oat";
+            case WHOLE -> "whole";
+        };
+    }
+
+    @Override
+    public double getBaseCost() {
+        double extra = 150;
+        if (milkType != null) {
+            //alternative milks are slightly expensive
+            extra = 200;
+        }
+        return delegate.getBaseCost() + extra;
+    }
+
+    public MilkType getMilkType() {
+        return milkType;
+    }
+
+}

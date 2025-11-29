@@ -1,0 +1,26 @@
+package com.coffeeshop.shop.core.model.beverage;
+
+import com.coffeeshop.shop.core.patterns.decorator.types.ToppingCompatible;
+import com.coffeeshop.shop.core.patterns.decorator.types.ToppingType;
+
+public class HerbalTea implements Beverage, ToppingCompatible {
+
+    @Override
+    public String getDescription() {
+        return "Herbal tea";
+    }
+
+    @Override
+    public double getBaseCost() {
+        return 700;
+    }
+
+    @Override
+    public boolean supports(ToppingType topping) {
+        return switch (topping) {
+            case MILK -> true;
+            case SYRUP, EXTRA_SHOT -> false;
+            default -> false;
+        };
+    }
+}
